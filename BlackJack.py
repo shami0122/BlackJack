@@ -1,4 +1,5 @@
 import random
+import os
 
 ############### Blackjack Project #####################
 
@@ -20,8 +21,11 @@ def deal_cards():
     cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
     return random.choice(cards)
 
-def calculate_score():
-    return False
+def calculate_score(nums):
+    score = 0
+    for num in nums:
+        score += num
+    return score
 
 
 def game():
@@ -29,15 +33,15 @@ def game():
     opponent_cards = []
 
     for i in range(2):
-        player_cards.append(deal_cards)
-        opponent_cards.append(deal_cards)
+        player_cards.append(deal_cards())
+        opponent_cards.append(deal_cards())
     
-    print(player_cards)
-    print(opponent_cards)
+    player_score = calculate_score(player_cards)
+    opponent_score = calculate_score(opponent_cards)
 
-
-
-
+    print("\tYour Cards: {cards}, current score: {score}".format(cards = player_cards, score = player_score))
+    print("\tComputers first card: {card}".format(card = opponent_cards[0]))
+    decision = input("Type 'y' to get another card, type'n' to pass: ").upper()
 
 logo = """
 .------.            _     _            _    _            _    
@@ -56,6 +60,8 @@ Welcome to the Game of BlackJack!
 ---------------------------------------------------------------""")
 start_game = input("If you want to start a new game, type 'y' or 'n to exit the game: ").upper()
 if(start_game == "Y"):
+    os.system('clear')
+    print(logo)
     game()
 else:
     exit
