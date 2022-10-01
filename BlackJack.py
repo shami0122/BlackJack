@@ -41,7 +41,6 @@ def game():
     opponent_score = calculate_score(opponent_cards)
 
     while is_Game_Over == False:
-
         if opponent_score == 21 or player_score == 21 or player_score > 21:
             is_Game_Over = True        
         else:
@@ -50,9 +49,16 @@ def game():
 
             if input("Type 'y' to get another card, type 'n' to pass: ").upper() == 'Y':
                 player_cards.append(deal_cards())
+                player_score = calculate_score(player_cards)
             else:
-                is_Game_Over == True
+                is_Game_Over = True
     
+
+    while opponent_score < 16:
+        opponent_cards.append(deal_cards())
+        opponent_score = calculate_score(opponent_cards)
+
+
     print("Your Final Hand: {player_hand}, final score: {score}".format(player_hand = player_cards, score = player_score))
     print("Computer's final hand: {computer_hand}, final score: {score}". format(computer_hand = opponent_cards, score = opponent_score))
 
