@@ -31,30 +31,47 @@ def calculate_score(nums):
 def game():
     player_cards = []
     opponent_cards = []
-    continue_game = True
+    is_Game_Over = False
 
     for i in range(2):
-        player_cards.append(deal_cards())
-        opponent_cards.append(deal_cards())
-    
+            player_cards.append(deal_cards())
+            opponent_cards.append(deal_cards())
+        
     player_score = calculate_score(player_cards)
     opponent_score = calculate_score(opponent_cards)
 
+    while is_Game_Over == False:
+
+        if opponent_score == 21 or player_score == 21 or player_score > 21:
+            is_Game_Over = True        
+        else:
+            print("\tYour Cards: {cards}, current score: {score}".format(cards = player_cards, score = player_score))
+            print("\tComputers first card: {card}".format(card = opponent_cards[0]))
+
+            if input("Type 'y' to get another card, type 'n' to pass: ").upper() == 'Y':
+                player_cards.append(deal_cards())
+            else:
+                is_Game_Over == True
+    
+    print("Your Final Hand: {player_hand}, final score: {score}".format(player_hand = player_cards, score = player_score))
+    print("Computer's final hand: {computer_hand}, final score: {score}". format(computer_hand = opponent_cards, score = opponent_score))
+
+
     if opponent_score == 21:
-        print("You lose, Opponent has a BlackJack!")
-        exit
+        print("You lose via BlackJack!")
     elif player_score == 21:
-        print("You win via BlackJack!")
-        exit
-
-    print("\tYour Cards: {cards}, current score: {score}".format(cards = player_cards, score = player_score))
-    print("\tComputers first card: {card}".format(card = opponent_cards[0]))
-
-    while continue_game == True:
-        decision = input("Type 'y' to get another card, type'n' to pass: ").upper()
-        if decision != 'Y':
-            continue_game = False
-            continue
+        print("You Win via BlackJack!")
+    elif player_score > 21:
+        print("You lose. Computer wins.")
+    elif opponent_score > 21:
+        print("You win. Computer lost.")
+    elif player_score == opponent_score:
+        print("Its a Draw.")
+    elif player_score > opponent_score:
+        print("You win.")
+    else:
+        print("You lose.")
+        
 
 
         
@@ -74,11 +91,11 @@ print(logo)
 print("""---------------------------------------------------------------
 Welcome to the Game of BlackJack! 
 ---------------------------------------------------------------""")
-start_game = input("If you want to start a new game, type 'y' or 'n to exit the game: ").upper()
-if(start_game == "Y"):
+while input("If you want to start a new game, type 'y' or 'n to exit the game: ").upper() == 'Y':
     os.system('clear')
     print(logo)
     game()
-else:
-    exit
+exit
+
+
 
