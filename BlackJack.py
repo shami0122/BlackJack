@@ -31,6 +31,7 @@ def calculate_score(nums):
 def game():
     player_cards = []
     opponent_cards = []
+    continue_game = True
 
     for i in range(2):
         player_cards.append(deal_cards())
@@ -39,9 +40,24 @@ def game():
     player_score = calculate_score(player_cards)
     opponent_score = calculate_score(opponent_cards)
 
+    if opponent_score == 21:
+        print("You lose, Opponent has a BlackJack!")
+        exit
+    elif player_score == 21:
+        print("You win via BlackJack!")
+        exit
+
     print("\tYour Cards: {cards}, current score: {score}".format(cards = player_cards, score = player_score))
     print("\tComputers first card: {card}".format(card = opponent_cards[0]))
-    decision = input("Type 'y' to get another card, type'n' to pass: ").upper()
+
+    while continue_game == True:
+        decision = input("Type 'y' to get another card, type'n' to pass: ").upper()
+        if decision != 'Y':
+            continue_game = False
+            continue
+
+
+        
 
 logo = """
 .------.            _     _            _    _            _    
